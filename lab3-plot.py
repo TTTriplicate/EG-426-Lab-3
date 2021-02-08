@@ -45,9 +45,24 @@ for i in range(len(yPlots[0])):
 print(len(xPlots))
 print(len(xPlots[0]))
 fig, axs = plt.subplots(2)
+colorCode = ['ro', 'yo', 'bo']
 for i in range(3):
-    axs[0].plot(xPlots[i], yPlots[i], 'r^')
-    axs[1].plot(xPlots[i+3], yPlots[i+3], 'bv')
-    axs[1].plot(rAvgX, rAvgY, 'cv')
-    axs[0].plot(lAvgX, lAvgY, 'm^')
+    axs[0].plot(xPlots[i], yPlots[i], colorCode[i], label = 'Left Turn Plot' + str(i+1))
+    axs[1].plot(xPlots[i+3], yPlots[i+3], colorCode[i], label = 'Right Turn Plot' + str(i+1))
+
+axs[0].plot(lAvgX, lAvgY, 'm^', label = "Corner Avg")
+axs[1].plot(rAvgX, rAvgY, 'm^', label = "Corner Avg")
+
+
+left = True
+for a in axs:
+    a.set(title = ("Left Turn Calibration"if left else "Right Turn Calibration"),
+xlabel = "mm from Start(x)",
+ylabel = "mm from Start(y)")
+    a.axhline(y = 0)
+    a.axvline(x = 0)
+    a.legend(loc = 2)
+    left = False
+
+
 plt.show()
